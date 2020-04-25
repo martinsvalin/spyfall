@@ -12,7 +12,8 @@ defmodule Spyfall.Application do
       # Start the PubSub system
       {Phoenix.PubSub, name: Spyfall.PubSub},
       # Start the Endpoint (http/https)
-      SpyfallWeb.Endpoint
+      SpyfallWeb.Endpoint,
+      Spyfall.Players
       # Start a worker by calling: Spyfall.Worker.start_link(arg)
       # {Spyfall.Worker, arg}
     ]
