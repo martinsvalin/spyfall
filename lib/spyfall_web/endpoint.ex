@@ -7,12 +7,14 @@ defmodule SpyfallWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_spyfall_key",
-    signing_salt: "eg5e7GzY"
+    signing_salt: "RVD8ci+f"
   ]
 
   socket "/socket", SpyfallWeb.UserSocket,
     websocket: true,
     longpoll: false
+
+  socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
 
   # Serve at "/" the static files from "priv/static" directory.
   #
@@ -31,6 +33,10 @@ defmodule SpyfallWeb.Endpoint do
     plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
   end
+
+  plug Phoenix.LiveDashboard.RequestLogger,
+    param_key: "request_logger",
+    cookie_key: "request_logger"
 
   plug Plug.RequestId
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]

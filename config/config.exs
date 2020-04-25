@@ -10,10 +10,10 @@ use Mix.Config
 # Configures the endpoint
 config :spyfall, SpyfallWeb.Endpoint,
   url: [host: "localhost"],
-  secret_key_base: "nXsD+nu7ZETLXjmYh9Vqb8ndDhDJP1ZvqcAs2VAcMT+rN9Bmd2/3DYtlVl2G9ISR",
-  render_errors: [view: SpyfallWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: Spyfall.PubSub, adapter: Phoenix.PubSub.PG2],
-  live_view: [signing_salt: "T8Ql5SzB"]
+  secret_key_base: "at64WUCFbG6gbWKMTwROtywenuwd3oxAknY2aWBI2eAQFgyy9Fk0V3+15f1Rjy23",
+  render_errors: [view: SpyfallWeb.ErrorView, accepts: ~w(html json), layout: false],
+  pubsub_server: Spyfall.PubSub,
+  live_view: [signing_salt: "AGRBoe7d"]
 
 # Configures Elixir's Logger
 config :logger, :console,

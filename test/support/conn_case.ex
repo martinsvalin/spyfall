@@ -20,7 +20,10 @@ defmodule SpyfallWeb.ConnCase do
   using do
     quote do
       # Import conveniences for testing with connections
-      use Phoenix.ConnTest
+      import Plug.Conn
+      import Phoenix.ConnTest
+      import SpyfallWeb.ConnCase
+
       alias SpyfallWeb.Router.Helpers, as: Routes
 
       # The default endpoint for testing

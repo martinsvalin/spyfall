@@ -6,12 +6,15 @@ defmodule Spyfall.Application do
   use Application
 
   def start(_type, _args) do
-    # List all child processes to be supervised
     children = [
-      # Start the endpoint when the application starts
+      # Start the Telemetry supervisor
+      SpyfallWeb.Telemetry,
+      # Start the PubSub system
+      {Phoenix.PubSub, name: Spyfall.PubSub},
+      # Start the Endpoint (http/https)
       SpyfallWeb.Endpoint
-      # Starts a worker by calling: Spyfall.Worker.start_link(arg)
-      # {Spyfall.Worker, arg},
+      # Start a worker by calling: Spyfall.Worker.start_link(arg)
+      # {Spyfall.Worker, arg}
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
