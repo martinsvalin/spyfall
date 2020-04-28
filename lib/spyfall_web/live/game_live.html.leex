@@ -1,0 +1,7 @@
+<h1>Welcome to game: <%= @game %></h1>
+<h2>Online players</h2>
+<ul>
+<%= for %{name: name, id: id} <- @online do %>
+  <li><%= name <> if id == @player_id, do: " (you)", else: "" %></li>
+<% end %>
+</ul>
