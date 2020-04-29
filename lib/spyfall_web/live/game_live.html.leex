@@ -1,7 +1,22 @@
-<h1>Welcome to game: <%= @game %></h1>
+<h1>Welcome to game: <%= @game %>! </h1>
+<p>You are <strong><%= get_in(@online, [@player_id, :name]) %></strong></p>
+
 <h2>Online players</h2>
 <ul>
-<%= for %{name: name, id: id} <- @online do %>
-  <li><%= name <> if id == @player_id, do: " (you)", else: "" %></li>
+<%= for {id, player} <- Enum.sort(@online) do %>
+  <li>
+    <%= player.name %>
+    <%= if player[:dealer], do: " (dealer)" %>
+    <%= if id == @player_id, do: " (you)" %>
+  </li>
+<% end %>
+
+<%= if get_in(@online, [@player_id, :dealer]) do %>
+  <h2>You're the dealer</h2>
+  <button phx-click="deal_cards" <%= if @card  , do: "disabled=true" %>>Deal cards</button>
+<% end %>
+
+<%= if @card do %>
+  <h2>Your card: <%= @card %></h2>
 <% end %>
 </ul>
