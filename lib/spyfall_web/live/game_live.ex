@@ -36,7 +36,7 @@ defmodule SpyfallWeb.GameLive do
   end
 
   def handle_info("card", socket) do
-    me = Games.player(socket.assigns.game, socket.assigns.player_id)
-    {:noreply, assign(socket, card: me.card)}
+    card = Games.card(socket.assigns.game, socket.assigns.player_id)
+    {:noreply, assign(socket, card: card)}
   end
 end

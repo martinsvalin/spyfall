@@ -3,13 +3,9 @@ defmodule Spyfall.Player do
     otp_app: :spyfall,
     pubsub_server: Spyfall.PubSub
 
-  alias Spyfall.Games
-  defstruct card: nil
-
-  def new(), do: %__MODULE__{}
-
   def online(game_id), do: list("game:" <> game_id)
 
+  @impl true
   def fetch(_topic, presences) do
     presences
     |> Map.new(&expose_name/1)
