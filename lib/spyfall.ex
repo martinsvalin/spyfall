@@ -15,7 +15,29 @@ defmodule Spyfall do
     |> Games.write_cards(game)
   end
 
-  @locations ["Airport ✈️", "Rock concert 🎸", "Cemetery ⚰️", "Nursing home 🛌"]
+  @locations [
+    "Airport ✈️",
+    "Art museum 🖼",
+    "Candy factory 🍬",
+    "Cat show 🐈",
+    "Cemetery ⚰️",
+    "Coal mine ⛏",
+    "Contruction site 👷‍♀️",
+    "Gas station ⛽️",
+    "Harbor docks 🚢",
+    "Jail 🔫",
+    "Jazz club 🎷",
+    "Library 📚",
+    "Retirement home 🛌",
+    "Race track 🏎",
+    "Rock concert 🎸",
+    "Sightseeing bus 🚌",
+    "Stadium 🏟",
+    "Subway 🚇",
+    "The U.N. 🏛",
+    "Vineyard 🍷",
+    "Wedding 👰",
+  ]
   defp assign_cards(players) do
     location = Enum.random(@locations)
     [{player_id, _} | rest] = Enum.shuffle(players)
