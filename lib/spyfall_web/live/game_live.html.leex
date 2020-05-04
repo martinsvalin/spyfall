@@ -11,12 +11,12 @@
   </li>
 <% end %>
 
-<%= if get_in(@online, [@player_id, :dealer]) do %>
-  <h2>You're the dealer</h2>
-  <button phx-click="deal_cards" <%= if @card  , do: "disabled=true" %>>Deal cards</button>
-<% end %>
-
 <%= if @card do %>
-  <h2>Your card: <%= @card %></h2>
+  <h2>Location: <%= @card.location %> – <%= @card.role %></h2>
 <% end %>
 </ul>
+
+<%= if get_in(@online, [@player_id, :dealer]) do %>
+  <h2>You're the dealer</h2>
+  <button phx-click="deal_cards" phx-throttle="3000">Deal cards</button>
+<% end %>
