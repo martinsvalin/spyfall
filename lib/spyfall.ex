@@ -47,4 +47,6 @@ defmodule Spyfall do
     [{first_id, @spy} | Enum.zip(rest, cards)]
     |> Map.new()
   end
+
+  def locations(), do: Map.keys(@locations)
 end

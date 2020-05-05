@@ -3,20 +3,28 @@
 
 <h2>Online players</h2>
 <ul>
-<%= for {id, player} <- Enum.sort(@online) do %>
+  <%= for {id, player} <- Enum.sort(@online) do %>
   <li>
     <%= player.name %>
     <%= if player[:dealer], do: " (dealer)" %>
     <%= if id == @player_id, do: " (you)" %>
   </li>
-<% end %>
-
-<%= if @card do %>
-  <h2>Location: <%= @card.location %> – <%= @card.role %></h2>
-<% end %>
+  <% end %>
 </ul>
 
-<%= if get_in(@online, [@player_id, :dealer]) do %>
-  <h2>You're the dealer</h2>
-  <button phx-click="deal_cards" phx-throttle="3000">Deal cards</button>
+<%= if @card do %>
+<h2>Location: <%= @card.location %> – <%= @card.role %></h2>
 <% end %>
+
+<%= if get_in(@online, [@player_id, :dealer]) do %>
+<h2>You're the dealer</h2>
+<button phx-click="deal_cards" phx-throttle="3000">Deal cards</button>
+<% end %>
+
+
+<h2>Possible locations</h2>
+<ul id="locations">
+  <%= for location <- @locations do %>
+  <li><%= location %></li>
+  <% end %>
+</ul>

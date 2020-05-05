@@ -16,6 +16,7 @@ defmodule SpyfallWeb.GameLive do
     {:ok,
      assign(socket,
        game: game_id,
+       locations: Spyfall.locations(),
        player_id: socket.id,
        online: Player.online(game_id),
        card: nil
