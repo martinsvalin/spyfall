@@ -19,7 +19,8 @@ defmodule SpyfallWeb.GameLive do
        locations: Spyfall.locations(),
        player_id: socket.id,
        online: Player.online(game_id),
-       card: nil
+       card: nil,
+       timestamp: nil
      )}
   end
 
@@ -38,6 +39,6 @@ defmodule SpyfallWeb.GameLive do
 
   def handle_info("card", socket) do
     card = Games.card(socket.assigns.game, socket.assigns.player_id)
-    {:noreply, assign(socket, card: card)}
+    {:noreply, assign(socket, card: card, timestamp: System.system_time(:second))}
   end
 end

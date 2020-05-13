@@ -12,6 +12,8 @@
   <% end %>
 </ul>
 
+<p>Timer: <span id="timer" phx-hook="Timer" data-timestamp="<%= @timestamp %>">00:00</span></p>
+
 <%= if @card do %>
 <h2>Location: <%= @card.location %> – <%= @card.role %></h2>
 <% end %>
