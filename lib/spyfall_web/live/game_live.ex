@@ -32,6 +32,11 @@ defmodule SpyfallWeb.GameLive do
     {:noreply, socket}
   end
 
+  def handle_event("new_name", %{"value" => new_name}, socket) do
+    Player.update(self(), "game:" <> socket.assigns.game, socket.id, %{name: new_name})
+    {:noreply, socket}
+  end
+
   @impl true
   def handle_info(%{event: "presence_diff"}, socket) do
     {:noreply, assign(socket, :online, Player.online(socket.assigns.game))}
