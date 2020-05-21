@@ -12,6 +12,7 @@ defmodule SpyfallWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
   end
 
   scope "/", SpyfallWeb do
@@ -21,10 +22,10 @@ defmodule SpyfallWeb.Router do
     live "/:game_id", GameLive
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", SpyfallWeb do
-  #   pipe_through :api
-  # end
+  scope "/__api", SpyfallWeb do
+    pipe_through :api
+    post "/set_name", SessionController, :set_name
+  end
 
   # Enables LiveDashboard only for development
   #
