@@ -1,8 +1,8 @@
 let epochNow = () => Math.floor((new Date).getTime() / 1000)
 let pad = (number) => String(number).padStart(2, '0')
 let post = (path, data) => {
-    fetch(window.location.origin + path, {
-        method: "POST",
+    fetch(path, {
+        method: "post",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data)
     })
