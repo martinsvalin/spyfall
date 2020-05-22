@@ -20,10 +20,11 @@ import Hooks from "./hooks"
 
 window.rememberName = () => {
     let name = document.getElementById("name").value
-    let xhr = new XMLHttpRequest()
-    xhr.open("POST", window.location.origin + "/__api/set_name", true)
-    xhr.setRequestHeader("Content-Type", "application/json")
-    xhr.send(JSON.stringify({ name: name }))
+    fetch(window.location.origin + "/__api/set_name", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name: name })
+    })
 }
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
