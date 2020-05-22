@@ -18,15 +18,6 @@ import NProgress from "nprogress"
 import { LiveSocket } from "phoenix_live_view"
 import Hooks from "./hooks"
 
-window.rememberName = () => {
-    let name = document.getElementById("name").value
-    fetch(window.location.origin + "/__api/set_name", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: name })
-    })
-}
-
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, { hooks: Hooks, params: { _csrf_token: csrfToken } })
 
