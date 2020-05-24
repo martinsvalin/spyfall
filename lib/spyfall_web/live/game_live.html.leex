@@ -1,5 +1,14 @@
 <h1>Welcome to game: <%= @game %>! </h1>
-<p>You are <strong><%= get_in(@online, [@player_id, :name]) %></strong></p>
+<p>
+  <label for="name">You are</label>
+  <input
+    id="name"
+    type="text"
+    value="<%= get_in(@online, [@player_id, :name]) %>"
+    phx-blur="new_name"
+    phx-hook="RememberName"
+  />
+</p>
 
 <h2>Online players</h2>
 <ul>
