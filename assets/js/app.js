@@ -24,6 +24,8 @@ let liveSocket = new LiveSocket("/live", Socket, { hooks: Hooks, params: { _csrf
 // Show progress bar on live navigation and form submits
 window.addEventListener("phx:page-loading-start", info => NProgress.start())
 window.addEventListener("phx:page-loading-stop", info => NProgress.done())
+// Accept name on Enter
+document.getElementById("name").addEventListener("keydown", (ev) => ev.key === "Enter" && ev.target.blur())
 
 // connect if there are any LiveViews on the page
 liveSocket.connect()
