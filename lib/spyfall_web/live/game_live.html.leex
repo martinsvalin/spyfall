@@ -1,41 +1,63 @@
-<h1>Welcome to game: <%= @game %>! </h1>
-<p>
-  <label for="name">You are</label>
-  <input id="name" type="text" value="<%= get_in(@online, [@player_id, :name]) %>" phx-blur="new_name"
-    phx-hook="RememberName" />
-</p>
-
-<h2>Online players</h2>
-<ul>
-  <%= for {id, player} <- Enum.sort(@online) do %>
-  <li>
-    <%= player.name %>
-    <%= if player[:dealer], do: " (dealer)" %>
-    <%= if id == @player_id, do: " (you)" %>
-  </li>
-  <% end %>
-</ul>
-
-<p>Timer: <span id="timer" phx-hook="Timer" data-timestamp="<%= @timestamp %>">00:00</span></p>
-
-<%= case @card do %>
-<%= nil -> %>
-<h2>No card yet…</h2>
-<%= %{role: "Spy"} -> %>
-<h2>You're the spy! <%= @card.illustration %></h2>
-<%= _ -> %>
-<h2>Location: <%= @card.location %> <%= @card.illustration %> – <%= @card.role %></h2>
-<% end %>
-
-<%= if get_in(@online, [@player_id, :dealer]) do %>
-<h2>You're the dealer</h2>
-<button phx-click="deal_cards" phx-throttle="3000">Deal cards</button>
-<% end %>
+<h1 class="text-blue-700 text-3xl sm:text-5xl font-bold">Playing Spyfall game: <%= @game %> </h1>
+<div class="flex">
+  <div class="w-1/2">
+    <div class="mt-6">
+      <h2 class="font-semibold my-2 text-xl tracking-wide uppercase">Welcome!</h2>
+      <label for="name">We'll call you</label>
+      <input id="name" type="text" phx-blur="new_name" phx-hook="RememberName"
+        value="<%= get_in(@online, [@player_id, :name]) %>" />
+      <%= if get_in(@online, [@player_id, :dealer]) do %>
+      <p class="my-2">You're the dealer</p>
+      <button phx-click="deal_cards" phx-throttle="3000"
+        class="bg-blue-500 px-4 py-3 rounded text-white uppercase font-semibold tracking-wider text-sm">
+        Deal cards
+      </button>
+      <% end %>
+    </div>
 
 
-<h2>Possible locations</h2>
-<ul id="locations">
-  <%= for {location, illustration} <- @locations do %>
-  <li><%= illustration %> <%= location %></li>
-  <% end %>
-</ul>
+    <div class="mt-6">
+      <%= case @card do %>
+      <%= %{role: "Spy"} -> %>
+      <h2 class="font-semibold my-2 text-xl tracking-wide uppercase">
+        You're the spy! <%= @card.illustration %>
+      </h2>
+      <%= %{} -> %>
+      <h2 class="font-semibold my-2 text-xl tracking-wide uppercase">
+        <%= @card.location %> <%= @card.illustration %>
+      </h2>
+      <p class="font-semibold my-2 text-sm tracking-wide ">Role: <%= @card.role %></p>
+      <%= nil -> %>
+      <h2 class="font-semibold my-2 text-xl tracking-wide uppercase">no card yet…</h2>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="w-1/2">
+    <div class="mt-6">
+      <h2 class="font-semibold my-2 text-xl tracking-wide uppercase">Online players</h2>
+      <ul>
+        <%= for {id, player} <- Enum.sort(@online) do %>
+        <li>
+          <%= player.name %>
+          <%= if player[:dealer], do: " (dealer)" %>
+          <%= if id == @player_id, do: " (you)" %>
+        </li>
+        <% end %>
+      </ul>
+    </div>
+
+    <div class="mt-6">
+      <p>Timer ⏳ <span id="timer" phx-hook="Timer" data-timestamp="<%= @timestamp %>">00:00</span></p>
+    </div>
+  </div>
+</div>
+
+<div class="mt-6">
+  <h2 class="font-semibold my-2 text-xl tracking-wide uppercase">Possible locations</h2>
+  <ul class="text-lg" id="locations" style="column-width: 10rem">
+    <%= for {location, illustration} <- @locations do %>
+    <li class="block"><%= illustration %> <%= location %></li>
+    <% end %>
+  </ul>
+</div>
