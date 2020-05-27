@@ -5,3 +5,36 @@
 /*  @import "./phoenix.css"; */
 /*  @import "./liveview.scss"; */
 @import "../node_modules/nprogress/nprogress.css";
+
+h2 {
+    @apply  font-semibold;
+    @apply  tracking-wide;
+    @apply  uppercase;
+    @apply  text-lg;
+    @apply  text-blue-800;
+    @apply  my-2;
+}
+
+@screen sm {
+    h2 {
+        @apply text-xl
+    }
+}
+
+#card h2,p {
+    @apply  text-green-900;
+}
+
+button {
+    @apply  mt-3
+            px-4
+            py-3
+            bg-blue-500
+            rounded
+            text-white
+            uppercase
+            font-semibold
+            tracking-wider
+            text-sm;
+}
+
