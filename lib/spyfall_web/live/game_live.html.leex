@@ -1,61 +1,60 @@
-<h1 class="text-blue-700 text-3xl sm:text-5xl font-bold">Playing Spyfall game: <%= @game %> </h1>
-<div class="flex">
-  <div class="w-1/2">
-    <div class="mt-6">
-      <h2 class="font-semibold my-2 text-xl tracking-wide uppercase">Welcome!</h2>
-      <label for="name">We'll call you</label>
-      <input id="name" type="text" phx-blur="new_name" phx-hook="RememberName"
-        value="<%= get_in(@online, [@player_id, :name]) %>" />
-      <%= if get_in(@online, [@player_id, :dealer]) do %>
-      <p class="my-2">You're the dealer</p>
-      <button phx-click="deal_cards" phx-throttle="3000"
-        class="bg-blue-500 px-4 py-3 rounded text-white uppercase font-semibold tracking-wider text-sm">
-        Deal cards
-      </button>
-      <% end %>
-    </div>
-
-
-    <div class="mt-6">
-      <%= case @card do %>
-      <%= %{role: "Spy"} -> %>
-      <h2 class="font-semibold my-2 text-xl tracking-wide uppercase">
-        You're the spy! <%= @card.illustration %>
-      </h2>
-      <%= %{} -> %>
-      <h2 class="font-semibold my-2 text-xl tracking-wide uppercase">
-        <%= @card.location %> <%= @card.illustration %>
-      </h2>
-      <p class="font-semibold my-2 text-sm tracking-wide ">Role: <%= @card.role %></p>
-      <%= nil -> %>
-      <h2 class="font-semibold my-2 text-xl tracking-wide uppercase">no card yet…</h2>
-      <% end %>
-    </div>
+<h1 class="text-blue-700 text-3xl sm:text-5xl font-bold text-center">
+  Spyfall game: <span class="capitalize"><%= @game %></span>
+</h1>
+<div class="text-center">
+  <div class="mt-6 text-lg font-semibold">
+    <p>⏳ <span id="timer" phx-hook="Timer" data-timestamp="<%= @timestamp %>">00:00</span> ⏳</p>
   </div>
-
-  <div class="w-1/2">
-    <div class="mt-6">
-      <h2 class="font-semibold my-2 text-xl tracking-wide uppercase">Online players</h2>
-      <ul>
-        <%= for {id, player} <- Enum.sort(@online) do %>
-        <li>
-          <%= player.name %>
-          <%= if player[:dealer], do: " (dealer)" %>
-          <%= if id == @player_id, do: " (you)" %>
-        </li>
-        <% end %>
-      </ul>
-    </div>
-
-    <div class="mt-6">
-      <p>Timer ⏳ <span id="timer" phx-hook="Timer" data-timestamp="<%= @timestamp %>">00:00</span></p>
-    </div>
+  <div class="mt-6 w-64 h-32 bg-green-200 mx-auto border border-gray-400
+              rounded-lg shadow-md flex justify-center items-center flex-col">
+    <%= case @card do %>
+    <%= %{role: "Spy"} -> %>
+    <h2 class="font-semibold my-2 text-xl tracking-wide uppercase">
+      You're the spy! <%= @card.illustration %>
+    </h2>
+    <%= %{} -> %>
+    <h2 class="font-semibold my-2 text-xl tracking-wide uppercase">
+      <%= @card.location %> <%= @card.illustration %>
+    </h2>
+    <p class="font-semibold my-2 text-sm tracking-wide ">Role: <%= @card.role %></p>
+    <%= nil -> %>
+    <h2 class="font-semibold my-2 text-xl tracking-wide uppercase">no card yet…</h2>
+    <% end %>
   </div>
 </div>
 
-<div class="mt-6">
-  <h2 class="font-semibold my-2 text-xl tracking-wide uppercase">Possible locations</h2>
-  <ul class="text-lg" id="locations" style="column-width: 10rem">
+<div class="flex mt-10">
+  <div class="w-1/2">
+    <h2 class="font-semibold my-2 text-lg sm:text-xl tracking-wide uppercase">Welcome!</h2>
+    <label for="name">We'll call you</label>
+    <input class="border w-40" id="name" type="text" phx-blur="new_name" phx-hook="RememberName"
+      value="<%= get_in(@online, [@player_id, :name]) %>" />
+    <%= if get_in(@online, [@player_id, :dealer]) do %>
+    <p class="mt-4">You're the dealer</p>
+    <button phx-click="deal_cards" phx-throttle="3000"
+      class="mt-3 bg-blue-500 px-4 py-3 rounded text-white uppercase font-semibold tracking-wider text-sm">
+      Deal cards
+    </button>
+    <% end %>
+  </div>
+
+  <div class="w-1/2">
+    <h2 class="font-semibold my-2 text-lg sm:text-xl tracking-wide uppercase">Online players</h2>
+    <ul>
+      <%= for {id, player} <- Enum.sort(@online) do %>
+      <li>
+        <%= player.name %>
+        <%= if player[:dealer], do: " (dealer)" %>
+        <%= if id == @player_id, do: " (you)" %>
+      </li>
+      <% end %>
+    </ul>
+  </div>
+</div>
+
+<div class="mt-10">
+  <h2 class="font-semibold my-2 text-lg sm:text-xl tracking-wide uppercase">Possible locations</h2>
+  <ul class="text-md sm:text-lg" id="locations" style="column-width: 10rem">
     <%= for {location, illustration} <- @locations do %>
     <li class="block"><%= illustration %> <%= location %></li>
     <% end %>
