@@ -4,14 +4,14 @@ defmodule SpyfallWeb.GameLive do
   alias Spyfall.{Games, Player}
 
   @impl true
-  def mount(%{"game_id" => game_id}, session, socket) do
+  def mount(%{"game_id" => game_id}, %{"identity" => identity} = session, socket) do
     if connected?(socket) do
-      Games.register(game_id, socket.id)
+      Games.register(game_id, identity)
 
       topic = "game:" <> game_id
       PubSub.subscribe(Spyfall.PubSub, topic)
 
-      Player.track(self(), topic, socket.id, %{
+      Player.track(self(), topic, identity, %{
         name: Map.get(session, "name", Player.initial_name())
       })
     end
@@ -20,7 +20,7 @@ defmodule SpyfallWeb.GameLive do
      assign(socket,
        game: game_id,
        locations: Spyfall.locations(),
-       player_id: socket.id,
+       player_id: identity,
        online: Player.online(game_id),
        card: nil,
        timestamp: nil
@@ -36,7 +36,13 @@ defmodule SpyfallWeb.GameLive do
   end
 
   def handle_event("new_name", %{"value" => new_name}, socket) do
-    Player.update(self(), "game:" <> socket.assigns.game, socket.id, %{name: new_name})
+    Player.update(
+      self(),
+      "game:" <> socket.assigns.game,
+      socket.assigns.player_id,
+      %{name: new_name}
+    )
+
     {:noreply, socket}
   end
 

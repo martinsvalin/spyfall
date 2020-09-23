@@ -1,9 +1,12 @@
 defmodule SpyfallWeb.Router do
   use SpyfallWeb, :router
 
+  alias SpyfallWeb.Plugs.Identity
+
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
+    plug Identity
     plug :fetch_live_flash
     plug :put_root_layout, {SpyfallWeb.LayoutView, :root}
     plug :protect_from_forgery
