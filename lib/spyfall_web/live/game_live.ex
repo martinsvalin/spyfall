@@ -22,7 +22,7 @@ defmodule SpyfallWeb.GameLive do
        locations: Spyfall.locations(),
        player_id: identity,
        online: Player.online(game_id),
-       card: nil,
+       card: Games.card(game_id, identity),
        timestamp: nil
      )}
   end

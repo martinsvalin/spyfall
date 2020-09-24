@@ -13,7 +13,10 @@ defmodule Spyfall.Games do
         state,
         game,
         put_in(new(), [:cards, player_id], nil),
-        &put_in(&1, [:cards, player_id], nil)
+        fn game ->
+          {_, new_game} = get_and_update_in(game, [:cards, player_id], &{&1, &1})
+          new_game
+        end
       )
     end)
   end
