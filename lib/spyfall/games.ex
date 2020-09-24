@@ -29,9 +29,7 @@ defmodule Spyfall.Games do
   end
 
   def card(game, player_id) do
-    Agent.get(__MODULE__, fn state ->
-      get_in(state, [game, :cards, player_id])
-    end)
+    Agent.get(__MODULE__, &get_in(&1, [game, :cards, player_id]))
   end
 
   def write_cards(cards, game) do
@@ -43,6 +41,16 @@ defmodule Spyfall.Games do
         &Map.put(&1, :cards, cards)
       )
     end)
+  end
+
+  def start_clock(game) do
+    Agent.update(__MODULE__, fn state ->
+      put_in(state, [game, :started_at], System.system_time(:second))
+    end)
+  end
+
+  def started_at(game) do
+    Agent.get(__MODULE__, &get_in(&1, [game, :started_at]))
   end
 
   defp new(), do: %{cards: %{}}

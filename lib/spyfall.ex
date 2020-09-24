@@ -10,6 +10,8 @@ defmodule Spyfall do
   alias Spyfall.Games
 
   def deal_cards(game, presences) do
+    Games.start_clock(game)
+
     Games.cards(game, Map.keys(presences))
     |> assign_cards()
     |> Games.write_cards(game)

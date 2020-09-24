@@ -23,7 +23,7 @@ defmodule SpyfallWeb.GameLive do
        player_id: identity,
        online: Player.online(game_id),
        card: Games.card(game_id, identity),
-       timestamp: nil
+       timestamp: Games.started_at(game_id)
      )}
   end
 
@@ -53,6 +53,6 @@ defmodule SpyfallWeb.GameLive do
 
   def handle_info("card", socket) do
     card = Games.card(socket.assigns.game, socket.assigns.player_id)
-    {:noreply, assign(socket, card: card, timestamp: System.system_time(:second))}
+    {:noreply, assign(socket, card: card, timestamp: Games.started_at(socket.assigns.game))}
   end
 end
